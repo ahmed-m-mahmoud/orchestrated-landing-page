@@ -1,0 +1,104 @@
+/* 300vh wrapper: 200vh of scroll distance while the 100vh canvas stays pinned. */
+.journey-scene {
+  height: 300vh;
+  position: relative;
+  background: var(--bg-soft);
+}
+
+.journey-sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* The shared SVG fills the whole sticky canvas, BEHIND the content (z-index 0). */
+.journey-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.journey-track {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.1);
+  stroke-width: 3;
+}
+
+.journey-path {
+  fill: none;
+  stroke: var(--accent-2);
+  stroke-width: 4;
+  stroke-linecap: round;
+}
+
+.journey-dot {
+  fill: var(--accent-3);
+  filter: drop-shadow(0 0 12px rgba(244, 114, 182, 0.8));
+}
+
+.journey-head {
+  position: relative;
+  z-index: 1;
+  padding-top: 5.5rem;
+  text-align: center;
+}
+
+.journey-head .section-head,
+.journey-head .section-title,
+.journey-head .section-sub {
+  margin-inline: auto;
+}
+
+/* Steps sit ABOVE the SVG (z-index 1) and animate in with a class toggle. */
+.journey-step {
+  position: absolute;
+  z-index: 1;
+  width: min(340px, 80vw);
+  padding: 1.25rem 1.5rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: rgba(13, 15, 28, 0.85);
+  backdrop-filter: blur(6px);
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 0.6s var(--ease-out),
+    transform 0.6s var(--ease-out);
+}
+
+.journey-step.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.journey-step h3 {
+  margin-bottom: 0.4rem;
+  color: var(--accent-2);
+  font-size: 1.05rem;
+}
+
+.journey-step p {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+.journey-progress {
+  position: absolute;
+  right: 1.5rem;
+  bottom: 1.25rem;
+  z-index: 1;
+  color: var(--text-faint);
+  font-size: 0.85rem;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 768px) {
+  /* On small screens the steps stack near the left edge — the SVG still flows behind. */
+  .journey-step {
+    left: 5% !important;
+  }
+}

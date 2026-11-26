@@ -1,0 +1,19 @@
+<section id="features" class="section" aria-label="Features">
+  <div class="container">
+    <div class="section-head" appReveal>
+      <p class="eyebrow">Features</p>
+      <h2 class="section-title">Everything a product team needs. Nothing it doesn’t.</h2>
+      <p class="section-sub">Six tools replaced by one flowing workspace.</p>
+    </div>
+
+    <div class="features-grid">
+      @for (feature of features; track feature.title; let i = $index) {
+        <article class="feature-card" appReveal [appRevealDelay]="i * 80">
+          <span class="feature-icon" aria-hidden="true">{{ feature.icon }}</span>
+          <h3>{{ feature.title }}</h3>
+          <p>{{ feature.text }}</p>
+        </article>
+      }
+    </div>
+  </div>
+</section>

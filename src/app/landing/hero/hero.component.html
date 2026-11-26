@@ -1,0 +1,36 @@
+<!--
+  The root is 200vh tall (see SCSS) — that extra viewport of height IS the
+  scroll distance the portal zoom plays over. The sticky inner stays pinned
+  for that whole distance.
+-->
+<section id="home" class="hero-scene" aria-label="Intro">
+  <div
+    class="hero-sticky"
+    [style.transform]="'scale(' + scale() + ')'"
+    [style.opacity]="fade()"
+  >
+    <div class="hero-glow" aria-hidden="true"></div>
+
+    <div class="hero-content container" [style.transform]="'translateY(' + driftY() + 'px)'">
+      <p class="eyebrow">Nexus — one flowing workspace</p>
+      <h1 class="hero-title">
+        Your product work,<br />
+        <span class="gradient-text">flowing as one.</span>
+      </h1>
+      <p class="hero-sub">
+        Nexus connects docs, tasks and decisions into a single scrollable
+        story — no more jumping between five tools to find out where a
+        project actually stands.
+      </p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#journey">See how it flows ↓</a>
+        <a class="btn btn-ghost" href="#pricing">View pricing</a>
+      </div>
+      <p class="hero-note">Free 14-day trial · No credit card · Cancel anytime</p>
+    </div>
+
+    <p class="scroll-cue" [style.opacity]="cueOpacity()" aria-hidden="true">
+      Scroll to enter ↓
+    </p>
+  </div>
+</section>

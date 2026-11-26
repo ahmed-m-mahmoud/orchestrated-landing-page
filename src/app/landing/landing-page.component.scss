@@ -1,0 +1,6 @@
+/* The orchestrator owns almost no styling of its own — layout lives in the
+   scene components, shared tokens live in styles.scss. This file exists so
+   the component has a home for page-level tweaks if they are ever needed. */
+:host {
+  display: block;
+}

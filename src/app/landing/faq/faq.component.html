@@ -1,0 +1,32 @@
+<section id="faq" class="section" aria-label="Frequently asked questions">
+  <div class="container faq-narrow">
+    <div class="section-head" appReveal>
+      <p class="eyebrow">FAQ</p>
+      <h2 class="section-title">Questions, answered.</h2>
+    </div>
+
+    <div class="faq-list" appReveal>
+      @for (item of items; track item.question; let i = $index) {
+        <div class="faq-item" [class.open]="openIndex() === i">
+          <button
+            type="button"
+            class="faq-question"
+            [attr.aria-expanded]="openIndex() === i"
+            [attr.aria-controls]="'faq-answer-' + i"
+            (click)="toggle(i)"
+          >
+            {{ item.question }}
+            <span class="faq-icon" aria-hidden="true">{{ openIndex() === i ? '−' : '+' }}</span>
+          </button>
+          <!--
+            @if removes the answer from the DOM when closed (not just hidden),
+            so screen readers never announce closed answers.
+          -->
+          @if (openIndex() === i) {
+            <p class="faq-answer" [id]="'faq-answer-' + i">{{ item.answer }}</p>
+          }
+        </div>
+      }
+    </div>
+  </div>
+</section>

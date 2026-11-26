@@ -1,0 +1,46 @@
+<header class="navbar">
+  <!-- Page-wide scroll progress: width is a pure function of the input. -->
+  <div
+    class="progress-bar"
+    role="progressbar"
+    aria-label="Page scroll progress"
+    [attr.aria-valuenow]="globalProgress()"
+    [attr.aria-valuemin]="0"
+    [attr.aria-valuemax]="100"
+    [style.width.%]="globalProgress() * 100"
+  ></div>
+
+  <nav class="nav-inner container" aria-label="Main navigation">
+    <a class="logo" href="#home" aria-label="Nexus — back to top">
+      <span class="logo-mark" aria-hidden="true">N</span> Nexus
+    </a>
+
+    <button
+      class="menu-toggle"
+      type="button"
+      [attr.aria-expanded]="menuOpen()"
+      aria-controls="nav-links"
+      aria-label="Toggle navigation menu"
+      (click)="toggleMenu()"
+    >
+      {{ menuOpen() ? '✕' : '☰' }}
+    </button>
+
+    <ul id="nav-links" class="nav-links" [class.open]="menuOpen()">
+      @for (link of links; track link.id) {
+        <li>
+          <a
+            [href]="link.href"
+            [class.active]="activeSection() === link.id"
+            [attr.aria-current]="activeSection() === link.id ? 'true' : null"
+            (click)="closeMenu()"
+            >{{ link.label }}</a
+          >
+        </li>
+      }
+      <li>
+        <a class="btn btn-primary btn-sm" href="#cta" (click)="closeMenu()">Get started</a>
+      </li>
+    </ul>
+  </nav>
+</header>

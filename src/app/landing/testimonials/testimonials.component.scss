@@ -1,0 +1,70 @@
+.carousel {
+  max-width: 760px;
+  margin-inline: auto;
+  padding: 2.5rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--bg-card);
+  text-align: center;
+}
+
+.quote-text {
+  font-size: clamp(1.2rem, 3vw, 1.6rem);
+  line-height: 1.5;
+  font-weight: 500;
+}
+
+.quote-name {
+  margin-top: 1.5rem;
+  font-weight: 700;
+}
+
+.quote-role {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.carousel-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+  margin-top: 2rem;
+}
+
+.arrow {
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--text);
+  font-size: 1.1rem;
+  transition: border-color 0.2s;
+}
+
+.arrow:hover {
+  border-color: var(--accent);
+}
+
+.dots {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: var(--text-faint);
+  transition:
+    background 0.2s,
+    transform 0.2s;
+}
+
+.dot.active {
+  background: var(--accent-2);
+  transform: scale(1.3);
+}

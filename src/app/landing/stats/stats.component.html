@@ -1,0 +1,14 @@
+<section class="section stats-section" aria-label="Numbers">
+  <div class="container">
+    <div class="stats-grid">
+      @for (stat of stats; track stat.label; let i = $index) {
+        <div class="stat" appReveal [appRevealDelay]="i * 80">
+          <p class="stat-value">
+            {{ displayed()[i].toLocaleString() }}<span class="stat-suffix">{{ stat.suffix }}</span>
+          </p>
+          <p class="stat-label">{{ stat.label }}</p>
+        </div>
+      }
+    </div>
+  </div>
+</section>

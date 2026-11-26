@@ -1,0 +1,30 @@
+<!-- 250vh wrapper: 150vh of scroll distance while the spiral stays pinned. -->
+<section id="projects" class="tornado-scene" aria-label="Projects">
+  <div class="tornado-sticky">
+    <div class="container tornado-head">
+      <p class="eyebrow">Selected work</p>
+      <h2 class="section-title">Projects, caught in a tornado.</h2>
+      <p class="section-sub">Scroll — the spiral spins and grows. Every card stays readable.</p>
+    </div>
+
+    <!-- The spiral: rotates + scales with progress. Cards are centred on it. -->
+    <div
+      class="spiral"
+      [style.transform]="'rotate(' + spiralRotation() + 'deg) scale(' + spiralScale() + ')'"
+      aria-label="Rotating spiral of projects"
+    >
+      <div class="spiral-core" aria-hidden="true">✦</div>
+      @for (project of projects; track project.name; let i = $index) {
+        <article class="project-card" [style.transform]="transformFor(i)">
+          <h3>{{ project.name }}</h3>
+          <p class="project-stack">{{ project.stack }}</p>
+          <p class="project-desc">{{ project.description }}</p>
+        </article>
+      }
+    </div>
+
+    <p class="tornado-hint" aria-hidden="true">
+      {{ (progress() * 100).toFixed(0) }}% through the spin
+    </p>
+  </div>
+</section>

@@ -1,0 +1,51 @@
+<section class="section" aria-label="Testimonials">
+  <div class="container">
+    <div class="section-head" appReveal>
+      <p class="eyebrow">Loved by teams</p>
+      <h2 class="section-title">Don’t take our word for it.</h2>
+    </div>
+
+    <!--
+      mouseenter/mouseleave pause the auto-advance; focusin/focusout do the
+      same for keyboard users. role="region" + aria-roledescription make the
+      carousel understandable to screen readers.
+    -->
+    <div
+      class="carousel"
+      role="region"
+      aria-roledescription="carousel"
+      aria-label="Customer testimonials"
+      appReveal
+      (mouseenter)="paused.set(true)"
+      (mouseleave)="paused.set(false)"
+      (focusin)="paused.set(true)"
+      (focusout)="paused.set(false)"
+    >
+      <blockquote class="quote">
+        <p class="quote-text">“{{ testimonials[current()].quote }}”</p>
+        <footer>
+          <p class="quote-name">{{ testimonials[current()].name }}</p>
+          <p class="quote-role">{{ testimonials[current()].role }}</p>
+        </footer>
+      </blockquote>
+
+      <div class="carousel-controls">
+        <button type="button" class="arrow" (click)="prev()" aria-label="Previous testimonial">←</button>
+        <div class="dots" role="tablist" aria-label="Choose testimonial">
+          @for (t of testimonials; track t.name; let i = $index) {
+            <button
+              type="button"
+              class="dot"
+              role="tab"
+              [class.active]="current() === i"
+              [attr.aria-selected]="current() === i"
+              [attr.aria-label]="'Show testimonial from ' + t.name"
+              (click)="goTo(i)"
+            ></button>
+          }
+        </div>
+        <button type="button" class="arrow" (click)="next()" aria-label="Next testimonial">→</button>
+      </div>
+    </div>
+  </div>
+</section>

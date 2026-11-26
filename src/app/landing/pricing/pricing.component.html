@@ -1,0 +1,50 @@
+<section id="pricing" class="section" aria-label="Pricing">
+  <div class="container">
+    <div class="section-head" appReveal>
+      <p class="eyebrow">Pricing</p>
+      <h2 class="section-title">Simple pricing, no surprises.</h2>
+      <p class="section-sub">Start free. Upgrade when your team grows.</p>
+    </div>
+
+    <!-- Toggle: a real switch (role="switch" + aria-checked) so it works with a screen reader. -->
+    <div class="billing-toggle" appReveal>
+      <span [class.active]="!yearly()">Monthly</span>
+      <button
+        type="button"
+        role="switch"
+        [attr.aria-checked]="yearly()"
+        aria-label="Toggle yearly billing"
+        (click)="yearly.update((v) => !v)"
+      >
+        <span class="knob" [class.yearly]="yearly()"></span>
+      </button>
+      <span [class.active]="yearly()">Yearly</span>
+      @if (yearly()) {
+        <span class="savings-badge">{{ yearlySavings() }}</span>
+      }
+    </div>
+
+    <div class="pricing-grid">
+      @for (tier of tiers; track tier.name; let i = $index) {
+        <article class="tier" [class.highlighted]="tier.highlighted" appReveal [appRevealDelay]="i * 80">
+          @if (tier.highlighted) {
+            <span class="popular-badge">Most popular</span>
+          }
+          <h3>{{ tier.name }}</h3>
+          <p class="price">
+            ${{ priceFor(tier) }}<span class="period">{{ periodLabel() }}</span>
+          </p>
+          <p class="tagline">{{ tier.tagline }}</p>
+          <ul class="tier-features">
+            @for (feature of tier.features; track feature) {
+              <li>✓ {{ feature }}</li>
+            }
+          </ul>
+          <a class="btn {{ tier.highlighted ? 'btn-primary' : 'btn-ghost' }}" href="#cta">
+            Choose {{ tier.name }}
+          </a>
+        </article>
+      }
+    </div>
+  </div>
+</section>

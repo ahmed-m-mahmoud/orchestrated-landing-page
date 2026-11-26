@@ -1,0 +1,60 @@
+<!--
+  300vh wrapper + sticky 100vh canvas.
+  The SVG is a SIBLING of the steps, not a child of any step — that is the
+  whole point: one continuous drawing spanning all three steps.
+-->
+<section id="journey" class="journey-scene" aria-label="How Nexus works">
+  <div class="journey-sticky">
+    <!--
+      THE SHARED SVG. viewBox "0 0 1000 2000" is a tall canvas (2:1) matching
+      the sticky viewport; preserveAspectRatio="none" stretches it to fill
+      exactly, so the path's curves land where the steps are on any screen.
+      pointer-events="none" + CSS pointer-events:none: the line is decoration,
+      it must never eat clicks meant for the text above it.
+    -->
+    <svg
+      class="journey-svg"
+      viewBox="0 0 1000 2000"
+      preserveAspectRatio="none"
+      aria-hidden="true"
+    >
+      <!-- faint full path underneath, so users see where the line is GOING -->
+      <path
+        class="journey-track"
+        d="M500,40 C 180,420 820,780 500,1080 C 180,1380 820,1680 500,1960"
+        pathLength="1"
+      />
+      <!-- the drawn path: dashoffset animates 1 → 0 as progress goes 0 → 1 -->
+      <path
+        class="journey-path"
+        d="M500,40 C 180,420 820,780 500,1080 C 180,1380 820,1680 500,1960"
+        pathLength="1"
+        [attr.stroke-dasharray]="1"
+        [attr.stroke-dashoffset]="dashOffset()"
+      />
+      <!-- travelling dot: same S-curve, x follows the curve loosely, y = progress -->
+      <circle class="journey-dot" cx="500" [attr.cy]="dotY()" r="14" />
+    </svg>
+
+    <div class="journey-head container">
+      <p class="eyebrow">The journey</p>
+      <h2 class="section-title">One line, from idea to launch.</h2>
+      <p class="section-sub">Keep scrolling — the line draws itself as you go.</p>
+    </div>
+
+    <!-- Steps overlay the SVG. Each fades/slides in at its threshold. -->
+    @for (step of steps; track step.title; let i = $index) {
+      <article
+        class="journey-step"
+        [class.visible]="isStepVisible(i)"
+        [style.left]="step.x"
+        [style.top]="step.y"
+      >
+        <h3>{{ step.title }}</h3>
+        <p>{{ step.text }}</p>
+      </article>
+    }
+
+    <p class="journey-progress" aria-hidden="true">{{ (progress() * 100).toFixed(0) }}%</p>
+  </div>
+</section>

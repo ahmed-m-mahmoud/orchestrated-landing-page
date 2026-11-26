@@ -1,0 +1,193 @@
+/**
+ * ============================================================================
+ * GLOBAL STYLES — the design tokens for the whole landing page.
+ * ============================================================================
+ * WHY one file owns all colours/spacing:
+ * Every component below reads these CSS variables instead of inventing its
+ * own palette. That is what keeps a "one flowing page" looking like ONE page
+ * instead of ten unrelated sections glued together.
+ *
+ * Dark theme, mobile-first. Breakpoints: 768px (tablet) / 1024px (desktop).
+ */
+:root {
+  /* --- Palette --- */
+  --bg: #07080f;
+  --bg-soft: #0d0f1c;
+  --bg-card: #121527;
+  --bg-card-hover: #181c33;
+  --text: #f2f3fa;
+  --text-muted: #a2a7c2;
+  --text-faint: #6b7089;
+  --border: rgba(255, 255, 255, 0.08);
+  --accent: #7c6cff; /* violet — the "flow" colour */
+  --accent-2: #22d3ee; /* cyan — the second flow colour */
+  --accent-3: #f472b6; /* pink — used sparingly, for the tornado */
+  --success: #34d399;
+
+  /* --- Type & spacing --- */
+  --font: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --radius: 16px;
+  --radius-lg: 24px;
+  --max-width: 1180px;
+  --section-pad: clamp(4rem, 10vw, 7rem);
+
+  /* --- Motion (single source of truth for easing) --- */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth; /* anchor jumps (#features, #pricing…) feel smooth */
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden; /* scroll-driven transforms can overshoot horizontally */
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
+}
+
+/* Visible keyboard focus — accessibility is not optional on a demo page. */
+:focus-visible {
+  outline: 2px solid var(--accent-2);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* --- Shared layout helpers (used by every section) --- */
+.container {
+  width: min(var(--max-width), 100% - 3rem);
+  margin-inline: auto;
+}
+
+.section {
+  padding-block: var(--section-pad);
+  position: relative;
+}
+
+.section-head {
+  max-width: 640px;
+  margin-bottom: 3rem;
+}
+
+.eyebrow {
+  display: inline-block;
+  margin-bottom: 0.75rem;
+  color: var(--accent-2);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.section-title {
+  font-size: clamp(1.9rem, 4vw, 2.75rem);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+.section-sub {
+  margin-top: 0.75rem;
+  color: var(--text-muted);
+  font-size: 1.05rem;
+}
+
+/* --- Reveal-on-scroll base states ---------------------------------------
+ * The RevealDirective only toggles `.is-visible`. The transition lives here,
+ * so the directive stays tiny and reusable.
+ */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 0.7s var(--ease-out),
+    transform 0.7s var(--ease-out);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* --- Buttons --- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.8rem 1.5rem;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  font-weight: 600;
+  transition:
+    transform 0.2s var(--ease-out),
+    background 0.2s,
+    border-color 0.2s;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: #fff;
+}
+
+.btn-ghost {
+  border-color: var(--border);
+  background: transparent;
+  color: var(--text);
+}
+
+.btn-ghost:hover {
+  border-color: var(--accent);
+}
+
+/* --- Accessibility: respect users who ask for less motion ---------------
+ * All scroll-driven transforms are transform/opacity only, and this block
+ * kills the *decorative* motion for `prefers-reduced-motion` users.
+ * (The orchestrator still works — content is simply shown in final state.)
+ */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

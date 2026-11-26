@@ -1,0 +1,52 @@
+<!--
+  LANDING PAGE TEMPLATE — composition only, no content.
+  ============================================================
+  Each scene is wrapped in a <div #…Scene>: the wrapper is what the
+  ScrollOrchestratorService measures (its height IS the scroll distance).
+  Progress flows ONE WAY: service → LandingPage → [progress] input → child.
+  Nothing flows back up. That one-way flow is what makes the page debuggable:
+  if an animation is wrong, the bug is either in the service's number or in
+  the child's transform — never in hidden communication between siblings.
+-->
+<app-navbar
+  [globalProgress]="scroll.globalProgress()"
+  [activeSection]="scroll.activeSection()"
+/>
+
+<main>
+  <!-- HERO — portal zoom scene (200vh wrapper inside the component). -->
+  <div #heroScene>
+    <app-hero [progress]="heroProgress()" />
+  </div>
+
+  <!-- JOURNEY — the shared-SVG scene (300vh). The SVG lives in the scene, not in a step. -->
+  <div #journeyScene>
+    <app-journey-scene [progress]="journeyProgress()" />
+  </div>
+
+  <!-- FEATURES — plain section, no scroll orchestration needed. -->
+  <div #featuresScene>
+    <app-features />
+  </div>
+
+  <!-- TORNADO — rotating spiral scene (250vh). -->
+  <div #tornadoScene>
+    <app-projects-tornado [progress]="tornadoProgress()" />
+  </div>
+
+  <app-stats />
+
+  <app-testimonials />
+
+  <!-- PRICING — plain section (registered only for the navbar highlight). -->
+  <div #pricingScene>
+    <app-pricing />
+  </div>
+
+  <!-- FAQ — plain section (registered only for the navbar highlight). -->
+  <div #faqScene>
+    <app-faq />
+  </div>
+
+  <app-cta-footer />
+</main>
